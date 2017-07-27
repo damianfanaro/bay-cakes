@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+
+    mongodb:
+        image: mongo
+        volumes:
+            - /tmp/mongodb/:/data/db
+        ports:
+            - "27017:27017"
+
+    baycakes:
+        image: baycakes
+        build: .
+        ports:
+            - "8080:8080"
+        links:
+            - mongodb
+
