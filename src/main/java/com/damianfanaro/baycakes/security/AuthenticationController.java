@@ -1,7 +1,9 @@
 package com.damianfanaro.baycakes.security;
 
-import com.damianfanaro.baycakes.user.BayCakesUser;
-import org.apache.log4j.Logger;
+import com.damianfanaro.baycakes.security.dto.AuthenticationRequest;
+import com.damianfanaro.baycakes.security.dto.AuthenticationResponse;
+import com.damianfanaro.baycakes.security.util.TokenUtils;
+import com.damianfanaro.baycakes.user.BayCakesUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -13,62 +15,67 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * TODO: complete with description
+ *
+ * @author dfanaro
+ */
 @RestController
-@RequestMapping("${baycakes.route.authentication}")
 public class AuthenticationController {
-
-    private final Logger logger = Logger.getLogger(this.getClass());
 
     @Value("${baycakes.token.header}")
     private String tokenHeader;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final TokenUtils tokenUtils;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    private TokenUtils tokenUtils;
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenUtils tokenUtils, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.tokenUtils = tokenUtils;
+        this.userDetailsService = userDetailsService;
+    }
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
-
-        // Perform the authentication
-        Authentication authentication = this.authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Reload password post-authentication so we can generate token
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        String token = this.tokenUtils.generateToken(userDetails, device);
-
-        // Return the token
+    @PostMapping(value = "${baycakes.route.authentication}")
+    public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
+        performAuthentication(authenticationRequest);
+        String token = getToken(authenticationRequest, device);
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 
-    @RequestMapping(value = "${baycakes.route.authentication.refresh}", method = RequestMethod.GET)
-    public ResponseEntity<?> authenticationRequest(HttpServletRequest request) {
-        String token = request.getHeader(this.tokenHeader);
-        String username = this.tokenUtils.getUsernameFromToken(token);
-        BayCakesUser user = (BayCakesUser) this.userDetailsService.loadUserByUsername(username);
-        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
-            String refreshedToken = this.tokenUtils.refreshToken(token);
+    @GetMapping(value = "${baycakes.route.authentication.refresh}")
+    public ResponseEntity<?> refreshUserToken(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader);
+        String username = tokenUtils.getUsernameFromToken(token);
+        BayCakesUserDetails user = (BayCakesUserDetails) userDetailsService.loadUserByUsername(username);
+        if (tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
+            String refreshedToken = tokenUtils.refreshToken(token);
             return ResponseEntity.ok(new AuthenticationResponse(refreshedToken));
         } else {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    private void performAuthentication(AuthenticationRequest authenticationRequest) {
+        Authentication authentication = authenticationManager.authenticate(getAuthenticationFromClientRequest(authenticationRequest));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    private UsernamePasswordAuthenticationToken getAuthenticationFromClientRequest(AuthenticationRequest authenticationRequest) {
+        return new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    }
+
+    private String getToken(@RequestBody AuthenticationRequest authenticationRequest, Device device) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        return tokenUtils.generateToken(userDetails, device);
     }
 
 }

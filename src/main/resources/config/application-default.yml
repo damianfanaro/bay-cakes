@@ -4,6 +4,8 @@ server:
 spring:
   jpa:
     show-sql: true
+    hibernate:
+      use-new-id-generator-mappings: true
   data:
     mongodb:
       host: localhost
@@ -13,7 +15,8 @@ spring:
       INDENT_OUTPUT: true
 
 logging:
-  level: debug
+  level:
+    ROOT: INFO
 
 baycakes:
   token:

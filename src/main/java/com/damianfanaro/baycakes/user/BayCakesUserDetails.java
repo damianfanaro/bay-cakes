@@ -1,6 +1,7 @@
 package com.damianfanaro.baycakes.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,8 @@ import java.util.Date;
  *
  * @author dfanaro
  */
-public class BayCakesUser implements UserDetails {
+@NoArgsConstructor
+public class BayCakesUserDetails implements UserDetails {
 
     private Long id;
     private String username;
@@ -25,11 +27,7 @@ public class BayCakesUser implements UserDetails {
     private Boolean credentialsNonExpired = true;
     private Boolean enabled = true;
 
-    public BayCakesUser() {
-        super();
-    }
-
-    public BayCakesUser(Long id, String username, String password, String email, Date lastPasswordReset, Collection<? extends GrantedAuthority> authorities) {
+    public BayCakesUserDetails(Long id, String username, String password, String email, Date lastPasswordReset, Collection<? extends GrantedAuthority> authorities) {
         this.setId(id);
         this.setUsername(username);
         this.setPassword(password);

@@ -1,10 +1,18 @@
 package com.damianfanaro.baycakes.user;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * TODO: complete with description
+ *
+ * @author dfanaro
+ */
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class User {
 
     private static final long serialVersionUID = 2353528370345499815L;
@@ -15,10 +23,6 @@ public class User {
     private String email;
     private Date lastPasswordReset;
     private String authorities;
-
-    public User() {
-        super();
-    }
 
     public User(String username, String password, String email, Date lastPasswordReset, String authorities) {
         this.setUsername(username);

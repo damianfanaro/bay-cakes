@@ -10,16 +10,16 @@ import java.util.Collection;
  *
  * @author dfanaro
  */
-public class BayCakesUserFactory {
+class BayCakesUserFactory {
 
-    public static BayCakesUser create(User user) {
+    static BayCakesUserDetails create(User user) {
         Collection<? extends GrantedAuthority> authorities;
         try {
             authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities());
         } catch (Exception e) {
             authorities = null;
         }
-        return new BayCakesUser(
+        return new BayCakesUserDetails(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),

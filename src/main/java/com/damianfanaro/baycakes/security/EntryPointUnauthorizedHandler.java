@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * TODO: complete with description
+ *
+ * @author dfanaro
+ */
 @Component
 public class EntryPointUnauthorizedHandler implements AuthenticationEntryPoint {
 
