@@ -28,4 +28,8 @@ public class RecipeService {
         return repository.findByRecipeName(recipeName);
     }
 
+    Recipe addRecipe(Recipe recipe) {
+        return repository.insert(recipe);
+    }
+
 }

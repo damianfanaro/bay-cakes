@@ -1,5 +1,25 @@
+server:
+  contextPath: /api
+
 spring:
+  jpa:
+    show-sql: true
   data:
     mongodb:
       host: localhost
       port: 27017
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+logging:
+  level: debug
+
+baycakes:
+  token:
+    header: X-Auth-Token
+    secret: baycakes-secret
+    expiration: 604800
+  route:
+    authentication: auth
+    authentication.refresh: refresh
