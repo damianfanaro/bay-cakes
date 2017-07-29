@@ -1,6 +1,5 @@
-package com.damianfanaro.baycakes.security;
+package com.damianfanaro.baycakes.security.token;
 
-import com.damianfanaro.baycakes.security.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,7 +21,7 @@ import java.io.IOException;
  *
  * @author dfanaro
  */
-public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
+public class TokenFilter extends UsernamePasswordAuthenticationFilter {
 
     @Value("${baycakes.token.header}")
     private String tokenHeader;

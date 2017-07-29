@@ -1,8 +1,8 @@
 package com.damianfanaro.baycakes.security.config;
 
-import com.damianfanaro.baycakes.security.AuthenticationTokenFilter;
 import com.damianfanaro.baycakes.security.EntryPointUnauthorizedHandler;
 import com.damianfanaro.baycakes.security.SecurityService;
+import com.damianfanaro.baycakes.security.token.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,10 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
-        authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
-        return authenticationTokenFilter;
+    public TokenFilter authenticationTokenFilterBean() throws Exception {
+        TokenFilter tokenFilter = new TokenFilter();
+        tokenFilter.setAuthenticationManager(authenticationManagerBean());
+        return tokenFilter;
     }
 
     @Bean
@@ -80,14 +80,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/",
+                        "/v2/api-docs",           // swagger
+                        "/webjars/**",            // swagger-ui webjars
+                        "/swagger-resources/**",  // swagger-ui resources
+                        "/configuration/**",      // swagger configuration
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
+                ).permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
 
 
         // Custom JWT based authentication
-
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity.headers().cacheControl();
     }
 
 }

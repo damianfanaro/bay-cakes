@@ -1,4 +1,4 @@
-package com.damianfanaro.baycakes.security.util;
+package com.damianfanaro.baycakes.security.token;
 
 import com.damianfanaro.baycakes.user.BayCakesUserDetails;
 import io.jsonwebtoken.Claims;

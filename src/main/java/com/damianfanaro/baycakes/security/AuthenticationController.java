@@ -2,7 +2,7 @@ package com.damianfanaro.baycakes.security;
 
 import com.damianfanaro.baycakes.security.dto.AuthenticationRequest;
 import com.damianfanaro.baycakes.security.dto.AuthenticationResponse;
-import com.damianfanaro.baycakes.security.util.TokenUtils;
+import com.damianfanaro.baycakes.security.token.TokenUtils;
 import com.damianfanaro.baycakes.user.BayCakesUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
