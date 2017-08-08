@@ -73,7 +73,7 @@ public class AuthenticationController {
         return new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword());
     }
 
-    private String getToken(@RequestBody AuthenticationRequest authenticationRequest, Device device) {
+    private String getToken(AuthenticationRequest authenticationRequest, Device device) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         return tokenUtils.generateToken(userDetails, device);
     }

@@ -5,8 +5,9 @@ spring:
       use-new-id-generator-mappings: true
   data:
     mongodb:
-      host: localhost
+      host: mongodb
       port: 27017
+      database: baycakes
   jackson:
     serialization:
       INDENT_OUTPUT: true

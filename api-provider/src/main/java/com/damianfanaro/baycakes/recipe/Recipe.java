@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * TODO: complete with description
@@ -28,6 +29,11 @@ public class Recipe {
     public Recipe(String recipeName, List<String> ingredients) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
+    }
+
+    public static Recipe of(String recipeName, List<String> ingredients) {
+        Objects.requireNonNull(recipeName, "Recipe name cannot be null!");
+        return new Recipe(recipeName, ingredients);
     }
 
 }
