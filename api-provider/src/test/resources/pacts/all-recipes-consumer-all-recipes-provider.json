@@ -1,0 +1,46 @@
+{
+    "provider": {
+        "name": "all-recipes-provider"
+    },
+    "consumer": {
+        "name": "all-recipes-consumer"
+    },
+    "interactions": [
+        {
+            "description": "a request to get all existing recipes",
+            "request": {
+                "method": "GET",
+                "path": "/recipe",
+                "headers": {
+                    "X-Auth-Token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwMjEzNTQxMDA1NCwiZXhwIjoxNTAyNzQwMjEwfQ.-EpLWJ7K2npv0RQCF7oqu2V3415ThoEE5LBLiRavM3Y77e3PSwmba_m3DS1vvsYF4WoVtzH3q7r2AFZ2_ZuaDg"
+                }
+            },
+            "response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "59881440c0d275035ac8817f",
+                        "recipeName": "cake",
+                        "ingredients": [
+                            "egg",
+                            "milk"
+                        ]
+                    }
+                ]
+            },
+            "providerStates": [
+                {
+                    "name": "a Bay Cakes API provider with food recipes"
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "3.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.5.3"
+        }
+    }
+}

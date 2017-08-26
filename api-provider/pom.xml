@@ -97,6 +97,49 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <contextDirectory>${project.basedir}</contextDirectory>
+                    <repository>${project.parent.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>au.com.dius</groupId>
+                <artifactId>pact-jvm-provider-maven_2.11</artifactId>
+                <configuration>
+                    <serviceProviders>
+                        <!-- You can define as many as you need, but each must have a unique name -->
+                        <serviceProvider>
+                            <name>all-recipes-provider</name>
+                            <!-- All the provider properties are optional, and have sensible defaults (shown below) -->
+                            <protocol>http</protocol>
+                            <host>localhost</host>
+                            <port>8080</port>
+                            <path>/</path>
+                            <consumers>
+                                <!-- Again, you can define as many consumers for each provider as you need, but each must have a unique name -->
+                                <consumer>
+                                    <name>all-recipes-consumer</name>
+                                    <!--  currently supports a file path using pactFile or a URL using pactUrl -->
+                                    <pactFile>${project.basedir}/src/test/resources/pacts/all-recipes-consumer-all-recipes-provider.json</pactFile>
+                                </consumer>
+                            </consumers>
+                        </serviceProvider>
+                    </serviceProviders>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
