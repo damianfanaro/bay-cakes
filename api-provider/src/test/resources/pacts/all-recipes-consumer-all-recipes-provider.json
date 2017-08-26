@@ -12,7 +12,7 @@
                 "method": "GET",
                 "path": "/recipe",
                 "headers": {
-                    "X-Auth-Token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwMjEzNTQxMDA1NCwiZXhwIjoxNTAyNzQwMjEwfQ.-EpLWJ7K2npv0RQCF7oqu2V3415ThoEE5LBLiRavM3Y77e3PSwmba_m3DS1vvsYF4WoVtzH3q7r2AFZ2_ZuaDg"
+                    "X-Auth-Token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTUwMzc2MDYxMzQyOSwiZXhwIjoxNTA0MzY1NDEzfQ.HM-PlfP7m1Td8V2GmW5EMHR8un0Bh2PwkArcXXx4jt0qwfNiq9-rz2QbmLfH_UCIu0mbpOW4C88ztrys5xPaRg"
                 }
             },
             "response": {
