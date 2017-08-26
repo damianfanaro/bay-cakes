@@ -222,4 +222,5 @@ exec "$JAVACMD" \
   $MAVEN_OPTS \
   -classpath "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar" \
   "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
+  "-Ddockerfile.build.skip=true" \
   ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
