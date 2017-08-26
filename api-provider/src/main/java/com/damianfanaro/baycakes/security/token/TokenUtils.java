@@ -4,6 +4,7 @@ import com.damianfanaro.baycakes.user.BayCakesUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -29,9 +30,11 @@ public class TokenUtils {
     private static final String AUDIENCE_MOBILE = "mobile";
     private static final String AUDIENCE_TABLET = "tablet";
 
+    @Setter
     @Value("${baycakes.token.secret}")
     private String secret;
 
+    @Setter
     @Value("${baycakes.token.expiration}")
     private Long expiration;
 

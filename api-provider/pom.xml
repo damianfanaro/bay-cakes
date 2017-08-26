@@ -111,7 +111,7 @@
                 </executions>
                 <configuration>
                     <contextDirectory>${project.basedir}</contextDirectory>
-                    <repository>${project.parent.artifactId}</repository>
+                    <repository>${project.parent.artifactId}-${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                 </configuration>
             </plugin>
@@ -133,11 +133,14 @@
                                 <consumer>
                                     <name>all-recipes-consumer</name>
                                     <!--  currently supports a file path using pactFile or a URL using pactUrl -->
-                                    <pactFile>${project.basedir}/src/test/resources/pacts/all-recipes-consumer-all-recipes-provider.json</pactFile>
+                                    <pactFile>
+                                        ${project.basedir}/src/test/resources/pacts/all-recipes-consumer-all-recipes-provider.json
+                                    </pactFile>
                                 </consumer>
                             </consumers>
                         </serviceProvider>
                     </serviceProviders>
+                    <pactBrokerUrl/>
                 </configuration>
             </plugin>
         </plugins>

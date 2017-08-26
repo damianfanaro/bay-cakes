@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import static org.mockito.Mockito.*;
 
 /**
- * TODO: complete with description
+ * Unit tests for {@link TokenUtils}.
  *
  * @author dfanaro
  */
@@ -30,6 +30,8 @@ public class TokenUtilsTest {
     @Test
     public void shouldPasswordEncodingMatch() {
         TokenUtils tokenUtils = new TokenUtils();
+        tokenUtils.setSecret("baycakes-secret");
+        tokenUtils.setExpiration(604800L);
         String token = tokenUtils.generateToken(userDetails, device);
         Assert.notNull(token);
     }
