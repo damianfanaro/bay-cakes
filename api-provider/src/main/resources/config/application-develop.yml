@@ -1,9 +1,14 @@
 spring:
   jpa:
     show-sql: false
-    database: h2
+    database: mysql
     hibernate:
       use-new-id-generator-mappings: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: baycakes
   jackson:
     serialization:
       INDENT_OUTPUT: true

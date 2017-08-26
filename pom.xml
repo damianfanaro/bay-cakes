@@ -50,6 +50,7 @@
         <mockito.version>2.8.47</mockito.version>
         <springfox.swagger.version>2.7.0</springfox.swagger.version>
         <pact.version>3.5.3</pact.version>
+        <guava.version>23.0</guava.version>
     </properties>
 
     <dependencyManagement>
@@ -68,6 +69,11 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -89,8 +95,35 @@
                 <artifactId>pact-jvm-consumer-junit_2.11</artifactId>
                 <version>${pact.version}</version>
             </dependency>
+            <dependency>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>cz.jirutka.spring</groupId>
+                <artifactId>embedmongo-spring</artifactId>
+                <version>1.3.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
