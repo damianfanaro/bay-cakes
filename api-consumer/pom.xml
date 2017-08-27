@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>api-consumer</name>
-    <description>Simple REST Consumer Tester For Bay Cakes Application</description>
+    <description>Frontend of Bay Cakes Application</description>
     <url>https://github.com/damianfanaro/bay-cakes/api-consumer</url>
 
     <parent>

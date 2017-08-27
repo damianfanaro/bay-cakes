@@ -12,6 +12,9 @@ logging:
   level:
     ROOT: INFO
 
+server:
+  port: 8181
+
 baycakes:
   token:
     header: X-Auth-Token

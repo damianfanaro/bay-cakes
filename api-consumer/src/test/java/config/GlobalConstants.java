@@ -1,11 +1,11 @@
-package configuration;
+package config;
 
 /**
  * TODO: complete with description
  *
  * @author dfanaro
  */
-public final class Constants {
+public final class GlobalConstants {
 
     public static final String MOCK_HOST = "localhost";
     public static final Integer MOCK_HOST_PORT = 1234;

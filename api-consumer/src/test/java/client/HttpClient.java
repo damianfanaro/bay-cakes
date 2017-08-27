@@ -1,9 +1,9 @@
-package httpclient;
+package client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.UrlEscapers;
-import configuration.Constants;
+import config.GlobalConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.fluent.Request;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
  *
  * @author dfanaro
  */
-public class ConsumerClient {
+public class HttpClient {
 
     private String url;
 
-    public ConsumerClient(String url) {
+    public HttpClient(String url) {
         this.url = url;
     }
 
@@ -40,7 +40,7 @@ public class ConsumerClient {
             uriBuilder.setParameters(parseQueryString(queryString));
         }
         return jsonToMap(Request.Get(uriBuilder.toString())
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .execute().returnContent().asString());
     }
 
@@ -57,13 +57,13 @@ public class ConsumerClient {
 
     public List getAsList(String path) throws IOException {
         return jsonToList(Request.Get(url + encodePath(path))
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .execute().returnContent().asString());
     }
 
     public String get(String path) throws IOException {
         return Request.Get(url + encodePath(path))
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .execute().returnContent().asString();
     }
 
@@ -73,7 +73,7 @@ public class ConsumerClient {
 
     public Map post(String path, String body, ContentType mimeType) throws IOException {
         String respBody = Request.Post(url + encodePath(path))
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .bodyString(body, mimeType)
                 .execute().returnContent().asString();
         return jsonToMap(respBody);
@@ -92,7 +92,7 @@ public class ConsumerClient {
 
     public int options(String path) throws IOException {
         return Request.Options(url + encodePath(path))
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .execute().returnResponse().getStatusLine().getStatusCode();
     }
 
@@ -104,7 +104,7 @@ public class ConsumerClient {
 
     public Map putAsMap(String path, String body) throws IOException {
         String respBody = Request.Put(url + encodePath(path))
-                .addHeader(Constants.JWT_HEADER_NAME, Constants.JWT_HEADER_VALUE)
+                .addHeader(GlobalConstants.JWT_HEADER_NAME, GlobalConstants.JWT_HEADER_VALUE)
                 .bodyString(body, ContentType.APPLICATION_JSON)
                 .execute().returnContent().asString();
         return jsonToMap(respBody);
