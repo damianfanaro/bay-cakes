@@ -5,14 +5,22 @@ services:
   mongodb:
     image: mongo
     volumes:
-      - /tmp/mongodb/:/data/db
+      - ./api-provider/mongodb/:/data/db
     ports:
       - "27017:27017"
 
-  baycakes:
-    image: baycakes
-    build: .
+  baycakes-provider:
+    image: baycakes-provider
+    build: ./api-provider
     ports:
       - "8080:8080"
     links:
       - mongodb
+
+#  baycakes-consumer:
+#    image: baycakes-consumer
+#    build: ./api-consumer
+#    ports:
+#      - "8081:8081"
+#    links:
+#      - baycakes-provider

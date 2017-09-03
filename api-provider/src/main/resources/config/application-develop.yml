@@ -1,7 +1,7 @@
 spring:
   jpa:
     show-sql: false
-    database: mysql
+    database: h2
     hibernate:
       use-new-id-generator-mappings: true
   data:
@@ -12,16 +12,3 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
-
-logging:
-  level:
-    ROOT: INFO
-
-baycakes:
-  token:
-    header: X-Auth-Token
-    secret: baycakes-secret
-    expiration: 604800
-  route:
-    authentication: auth
-    authentication.refresh: refresh

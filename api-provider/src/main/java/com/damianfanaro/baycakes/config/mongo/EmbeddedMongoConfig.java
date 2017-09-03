@@ -1,11 +1,15 @@
-package com.damianfanaro.baycakes.config;
+package com.damianfanaro.baycakes.config.mongo;
 
 import com.damianfanaro.baycakes.recipe.Recipe;
 import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -16,19 +20,26 @@ import java.io.IOException;
  *
  * @author dfanaro
  */
+@Import({MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @Configuration
 @Profile("default")
-public class InMemoryMongo {
+public class EmbeddedMongoConfig {
 
-    private static final String MONGO_DB_URL = "localhost";
-    private static final String MONGO_DB_NAME = "bay_cakes_embedded_db";
+    @Value("${spring.data.mongodb.host}")
+    private String mongoHost;
+
+    @Value("${spring.data.mongodb.port}")
+    private String mongoPort;
+
+    @Value("${spring.data.mongodb.database}")
+    private String mongoDatabase;
 
     @Bean
     public MongoTemplate mongoTemplate() throws IOException {
         EmbeddedMongoFactoryBean mongo = new EmbeddedMongoFactoryBean();
-        mongo.setBindIp(MONGO_DB_URL);
+        mongo.setBindIp(mongoHost);
         MongoClient mongoClient = mongo.getObject();
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, MONGO_DB_NAME);
+        MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, mongoDatabase);
         initializeMongoDatabase(mongoTemplate);
         return mongoTemplate;
     }

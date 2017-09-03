@@ -1,4 +1,4 @@
-package com.damianfanaro.baycakes.config;
+package com.damianfanaro.baycakes.config.swagger;
 
 import com.damianfanaro.baycakes.BayCakesStarter;
 import com.google.common.base.Predicate;

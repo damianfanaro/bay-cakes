@@ -1,0 +1,15 @@
+logging:
+  level:
+    ROOT: INFO
+
+baycakes:
+  token:
+    header: X-Auth-Token
+    secret: baycakes-secret
+    expiration: 604800
+  route:
+    authentication: auth
+    authentication.refresh: refresh
+
+server:
+  port: 8080
